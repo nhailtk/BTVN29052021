@@ -24,7 +24,6 @@ public class BTVN29052021 {
         login("standard_user","secret_sauce");
         WebElement shoppingCart = driver.findElement(By.id("shopping_cart_container"));
         Assert.assertTrue(shoppingCart.isDisplayed());
-
     }
 
     @Test
@@ -36,17 +35,18 @@ public class BTVN29052021 {
 
     @Test
     public void login_problem_user() {
-        login("problem_user","secret_sauce");
-        WebElement shoppingCart = driver.findElement(By.id("shopping_cart_container"));
-        Assert.assertTrue(shoppingCart.isDisplayed());
+        login("abc_user","secret_sauce");
+        WebElement errorLabel = driver.findElement(By.xpath("//div[@class='login-box']//h3"));
+        Assert.assertEquals("Epic sadface: Username and password do not match any user in this service", errorLabel.getText());
     }
-
+    
     @Test
-    public void login_performance_glitch_user(){
-        login("performance_glitch_user","secret_sauce");
-        WebElement shoppingCart = driver.findElement(By.id("shopping_cart_container"));
-        Assert.assertTrue(shoppingCart.isDisplayed());
+    public void login_problem_password() {
+        login("standard_user","wrong_sauce");
+        WebElement errorLabel = driver.findElement(By.xpath("//div[@class='login-box']//h3"));
+        Assert.assertEquals("Epic sadface: Username and password do not match any user in this service", errorLabel.getText());
     }
+    
     @Test
     public void login_with_userName_blank(){
         login("","secret_sauce");
